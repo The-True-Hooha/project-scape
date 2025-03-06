@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+
+# Application specific
+images/
+*.log
+debug_screenshot.png
+
+# Editor directories and files
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# OS specific files
+.DS_Store

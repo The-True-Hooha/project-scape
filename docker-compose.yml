@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  scraper:
+    build: .
+    container_name: project-scape
+    volumes:
+      - ./images:/app/images
+    restart: unless-stopped
+    environment:
+      - TZ=UTC
