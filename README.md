@@ -1,5 +1,17 @@
 # Project Scape
 
+TLDR:
+
+Lol, I tried automating the uploads to instagram and failed at that(skill issue), but would appreciate if anyone can open a pr regarding that. Might pick it up in future, this was supposed to be a project I could conclude in a day or 2.
+
+Here's what to keep in mind automating IG:
+
+- Use a proxy or VPN Service to avoid IP blacklisting from Instagram
+- Pre-authenticate and save the session
+- Handle for login challenges if any
+- implement delays between actions
+- Just use the official api bro
+
 An automated tool that scrapes images from X (Twitter) profiles and reposts them to Instagram as carousels.
 
 ## Overview
