@@ -16,7 +16,6 @@ async def scrape_x_images(username:str, max_images: int, base_dir:str):
     image_urls = set()
     _xhr_calls = []
 
-    # Create date-based directory
     today = datetime.now().strftime('%Y-%m-%d')
     save_dir = os.path.join(base_dir, today)
     os.makedirs(save_dir, exist_ok=True)
@@ -35,19 +34,17 @@ async def scrape_x_images(username:str, max_images: int, base_dir:str):
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
         )
 
-        # Add slow motion for debugging (remove in production)
-        context.set_default_timeout(120000)  # Increase timeout to 60 seconds
+        #TODO: Add slow motion for debugging (remove in production)
+        context.set_default_timeout(120000)
 
         page = await context.new_page()
         page.on("response", intercept_response)
 
         try:
-            # Navigate to media tab of profile
             profile_url = f"https://x.com/{username}/media"
             print(f"Navigating to {profile_url}")
             await page.goto(profile_url, wait_until="domcontentloaded")
 
-            # Check if we need to handle login wall
             login_prompt = await page.query_selector('div[aria-label="Sign in"]')
             if login_prompt:
                 print("Detected login wall, trying to work around it...")
@@ -56,7 +53,6 @@ async def scrape_x_images(username:str, max_images: int, base_dir:str):
                 await page.keyboard.press("Escape")
                 await asyncio.sleep(2)
 
-            # Wait for content with more timeout
             try:
                 await page.wait_for_selector("[data-testid='primaryColumn']", timeout=45000)
                 print(f"Loaded profile: {username}")
@@ -70,7 +66,7 @@ async def scrape_x_images(username:str, max_images: int, base_dir:str):
 
             while len(image_urls) < max_images and scroll_attempts < max_scroll_attempts:
                 await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-                await asyncio.sleep(3)  # Increased wait time
+                await asyncio.sleep(3)
 
                 img_elements = await page.query_selector_all('img[src*="pbs.twimg.com/media"]')
                 for img in img_elements:
@@ -109,7 +105,6 @@ async def scrape_x_images(username:str, max_images: int, base_dir:str):
 
     async def download_image(url, index):
         try:
-            # Extract media ID from URL for consistent filename
             media_id = re.search(r'/media/([^?]+)', url).group(1)
             filename = f"{media_id}.jpg"
             filepath = os.path.join(save_dir, filename)

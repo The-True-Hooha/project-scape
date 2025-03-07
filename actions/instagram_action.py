@@ -126,7 +126,6 @@ async def post_images(username: str, password: str, base_dir: str, credits: str)
 
     print(f"Posted {len(successful_posts)} batches out of {len(batches)}")
 
-    # Save session to reuse next time (reduces login challenges)
     session_file = f"{username}_session.json"
     client.dump_settings(session_file)
 
